@@ -1,0 +1,38 @@
+{
+  "name": "je-te-quizz",
+  "type": "module",
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "@fastify/multipart": "^8.2.0",
+    "@fastify/static": "^7.0.3",
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^3.0.0",
+    "@fastify/type-provider-typebox": "^4.0.0",
+    "@sinclair/typebox": "^0.32.22",
+    "fastify": "^4.26.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  },
+  "scripts": {
+    "dev": "vite src/ui --port 3000 --open",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write src/**/*.{ts,tsx}"
+
+  }
+}
