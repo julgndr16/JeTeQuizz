@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { FunctionComponent, useContext, useEffect } from "react";
-import Counter from "./components/Counter";
-import { store } from "./main";
+import Counter from "../components/Counter";
+import { store } from "../main";
 
 const App: FunctionComponent = () => {
   useEffect(() => {
