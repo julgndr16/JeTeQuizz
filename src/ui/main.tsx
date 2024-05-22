@@ -7,6 +7,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import App from "./routes/App";
+import Profile from "./routes/Profile";
 
 export type IStore = {
   init: boolean;
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <h1>Profile</h1>,
+    element: <Profile />,
   },
 ]);
 
