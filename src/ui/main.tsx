@@ -6,7 +6,8 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import App from "../ui/routes/App";
+import App from "./routes/App";
+import QuizCreation from "./routes/QuizCreation";
 
 export type IStore = {
   init: boolean;
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/quizCreation",
-    element: <h1>Welcome to Quiz Creation !</h1>,
+    element: <QuizCreation />,
   },
 ]);
 
