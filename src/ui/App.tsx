@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect } from "react";
-import Counter from "./components/Counter.tsx";
+import Counter from "./components/Counter";
 
 const App: FunctionComponent = () => {
   useEffect(() => {
