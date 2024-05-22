@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useContext, useEffect } from "react";
 import Counter from "./components/Counter";
+import { store } from "./main";
 
 const App: FunctionComponent = () => {
   useEffect(() => {
@@ -9,6 +10,9 @@ const App: FunctionComponent = () => {
       console.log("App unmounted");
     };
   }, []);
+
+  const s = useContext(store);
+  console.log(s);
 
   return (
     <div>
