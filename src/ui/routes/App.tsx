@@ -1,7 +1,12 @@
-import { Button } from "@mui/material";
 import { FunctionComponent, useContext, useEffect } from "react";
+<<<<<<< HEAD
 import Header from "./components/Header";
 import Counter from "../components/Counter";
+=======
+import Counter from "./components/Counter";
+import Header from "./components/Header";
+import { Button } from "@mui/material";
+>>>>>>> 2f1546d (front of the header)
 import { store } from "../main";
 
 const App: FunctionComponent = () => {
