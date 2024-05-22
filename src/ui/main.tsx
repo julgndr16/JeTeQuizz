@@ -6,7 +6,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import App from "./App";
+import App from "./routes/App";
 
 export type IStore = {
   init: boolean;
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <h1>This is what it is about !</h1>,
+  },
+  {
+    path: "/profile",
+    element: <h1>Profile</h1>,
   },
 ]);
 
