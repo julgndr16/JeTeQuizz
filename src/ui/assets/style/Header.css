@@ -1,3 +1,14 @@
+header {
+    width: 100%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 0 0 10px 10px;
+    backdrop-filter: blur(10px);
+    background: transparent;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
 .toolbar {
     width: 90%;
     display: flex;
@@ -9,7 +20,7 @@
 
 button.je-te-quizz {
     border: none;
-    padding: 5px 5px;
+    padding: 10px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,17 +45,20 @@ button.je-te-quizz:hover img {
 
 button.account {
     background-image: url("../img/profil-black.svg");
-    width: 31px;
-    height: 31px;
+    width: 41px;
+    height: 41px;
     border: none;
     background-color: transparent;
-    background-size: contain;
+    background-size: 21px;
     background-position: center;
     transition: .2s ease-out;
     cursor: pointer;
+    background-repeat: no-repeat;
+    border-radius: 25px 25px;
 }
 
 button.account:hover {
     background-image: url("../img/profil-purple.svg");
     transform: rotateY(180deg);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
