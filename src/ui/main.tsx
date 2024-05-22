@@ -23,6 +23,10 @@ const router = createBrowserRouter([
     path: "/about",
     element: <h1>This is what it is about !</h1>,
   },
+  {
+    path: "/quizCreation",
+    element: <h1>Welcome to Quiz Creation !</h1>,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
