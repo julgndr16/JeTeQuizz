@@ -12,6 +12,7 @@
     font-family: "Quicksand Medium", sans-serif;
     transition: .2s ease;
     cursor: pointer;
+    margin-top: 3%;
 }
 
 .tile:hover {
