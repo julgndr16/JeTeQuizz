@@ -20,7 +20,7 @@ export const configurePlugins = async () => {
     swagger: {
       consumes: ["application/json", "multipart/form-data"],
       produces: ["application/json"],
-      //tags: [],
+      tags: [{ name: "Quizz", description: "Quizz related end-points" }],
     },
   });
   await server.register(fastifySwaggerUi, {

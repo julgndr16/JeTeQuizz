@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id      Int      @id @default(autoincrement())
+  score   Int
+  date    DateTime @db.DateTime(0)
+  idQuizz Int
+  idUser  Int
+  Quizz   Quizz    @relation(fields: [idQuizz], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idQuizzGame")
+  User    User     @relation(fields: [idUser], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idUserGame")
+
+  @@index([idQuizz], map: "fk_idQuizzGame")
+  @@index([idUser], map: "fk_idUserGame")
+}
+
+model QuestRep {
+  idQuest  Int
+  idResp   Int
+  Question Question @relation(fields: [idQuest], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idQuest")
+  Response Response @relation(fields: [idResp], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idResp")
+
+  @@id([idQuest, idResp])
+  @@index([idResp], map: "fk_idResp")
+}
+
+model Question {
+  id         Int          @id @default(autoincrement())
+  name       String       @db.Text
+  idGoodRep  Int
+  QuestRep   QuestRep[]
+  Response   Response     @relation(fields: [idGoodRep], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idGoodRep")
+  QuizzQuest QuizzQuest[]
+
+  @@index([idGoodRep], map: "fk_idGoodRep")
+}
+
+model Quizz {
+  id         Int          @id @default(autoincrement())
+  name       String       @db.VarChar(255)
+  level      Int
+  nbQuest    Int
+  idCreator  Int
+  Game       Game[]
+  User       User         @relation(fields: [idCreator], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idCreator")
+  QuizzQuest QuizzQuest[]
+
+  @@index([idCreator], map: "fk_idCreator")
+}
+
+model QuizzQuest {
+  idQuest  Int
+  idQuizz  Int
+  Question Question @relation(fields: [idQuest], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idQuest2")
+  Quizz    Quizz    @relation(fields: [idQuizz], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idQuizz")
+
+  @@id([idQuest, idQuizz])
+  @@index([idQuizz], map: "fk_idQuizz")
+}
+
+model Response {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.Text
+  QuestRep QuestRep[]
+  Question Question[]
+}
+
+model User {
+  id     Int     @id @default(autoincrement())
+  pseudo String  @db.VarChar(50)
+  mail   String  @db.VarChar(200)
+  token  String  @db.VarChar(255)
+  Game   Game[]
+  Quizz  Quizz[]
+}
