@@ -9,7 +9,6 @@ import "@fontsource/roboto/700.css";
 import App from "./routes/App";
 import QuizCreation from "./routes/QuizCreation";
 
-
 export type IStore = {
   url : string;
 };
