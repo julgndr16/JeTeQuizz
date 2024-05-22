@@ -1,6 +1,7 @@
 import { FunctionComponent, useContext, useEffect } from "react";
+import Header from "../components/Header";
 import { store } from "../main";
-import Header from "./components/Header";
+
 const App: FunctionComponent = () => {
   useEffect(() => {
     console.log("App mounted");
