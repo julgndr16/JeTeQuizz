@@ -23,9 +23,6 @@ const App: FunctionComponent = () => {
       padding: "0 0",
     }}>
       <Header />
-      {/*<h1>Material UI</h1>*/}
-      {/*<Counter default_count={3} />*/}
-      {/*<Button variant={"contained"}>Hello World</Button>*/}
     </div>
   );
 };
