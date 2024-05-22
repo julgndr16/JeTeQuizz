@@ -7,6 +7,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import App from "./routes/App";
+import Play from "./routes/Play";
 
 export type IStore = {
   init: boolean;
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <h1>Profile</h1>,
+  },
+  {
+    path: "/play",
+    element: <Play />,
   },
 ]);
 
