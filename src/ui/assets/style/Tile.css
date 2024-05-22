@@ -1,0 +1,35 @@
+.tile {
+    width: 200px;
+    height: 290px;
+    border-radius: 10px 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #FFFF;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 15px 10px;
+    font-family: "Quicksand Medium", sans-serif;
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+.tile:hover {
+    transform: scale(1.1);
+}
+
+.tile .bottom-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.bottom-card div {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #9B69FF;
+    font-family: Quicksand, sans-serif;
+}
+
