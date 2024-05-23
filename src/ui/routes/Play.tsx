@@ -5,7 +5,7 @@ import { store } from "../StoreProvider";
 import { useNavigate } from "react-router-dom";
 
 const Play = () => {
-  const { currentQuizzId, setCurrentQuizzId } = useContext(store);
+  const { currentQuizzId, setCurrentQuizzId, url } = useContext(store);
 
   const navigate = useNavigate();
 
@@ -15,47 +15,15 @@ const Play = () => {
     }
   }, [currentQuizzId]);
 
+  useEffect(() => {
+    const fetchQuizz = async () =>{
+      const res = await fetch(`${url}quizz/${currentQuizzId}`);
+      const data = await res.json();
+      setQuestions(data.questions);
+    }
+  }, );
   const [questions, setQuestions] = useState([
-    {
-      title: "Quelle est la capitale de la France ?",
-      answers: [
-        { id: 1, name: "Paris" },
-        { id: 2, name: "Londres" },
-        { id: 3, name: "Lisbonne" },
-        { id: 4, name: "Berlin" },
-      ],
-      total: 4,
-    },
-    {
-      title: "Quelle est la capitale de l'Espagne ?",
-      answers: [
-        { id: 5, name: "Paris" },
-        { id: 6, name: "Madrid" },
-        { id: 7, name: "New York" },
-        { id: 8, name: "Berlin" },
-      ],
-      total: 4,
-    },
-    {
-      title: "Quelle est la capitale de l'Allemagne ?",
-      answers: [
-        { id: 9, name: "Dublin" },
-        { id: 10, name: "Londres" },
-        { id: 11, name: "Berlin" },
-        { id: 12, name: "Rome" },
-      ],
-      total: 4,
-    },
-    {
-      title: "Quelle est la capitale de l'Italie ?",
-      answers: [
-        { id: 13, name: "Paris" },
-        { id: 14, name: "Londres" },
-        { id: 15, name: "Rome" },
-        { id: 16, name: "Berlin" },
-      ],
-      total: 4,
-    },
+
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [childData, setChildData] = useState<number | undefined>();
@@ -136,6 +104,9 @@ const Play = () => {
         >
           Finishhhh !
         </Button>
+      )}
+      {currentQuestionIndex == questions.length && (
+        <h1>Quizz terminé</h1>
       )}
     </div>
   );

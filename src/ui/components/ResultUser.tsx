@@ -1,4 +1,5 @@
 import Paper from "@mui/material/Paper";
+import ScoreData from "./ScoreData";
 
 
 
@@ -12,6 +13,9 @@ const ResultUser = ({ user }) => {
         width: "40vw",
       }}
     >
+      <ScoreData name="Score" value={100} color="success" />
     </Paper>
 );
 }
+
+export default ResultUser;
