@@ -20,7 +20,7 @@ export default function QuestionForm({ handleAdd }) {
 
   // affichage (render)
   return (
-    <form action={"submit"} onSubmit={handleSubmit}>
+    <form action={"submit"} onSubmit={handleSubmit} className={"question-form"}>
       <input
         value={nouvelleQuestion}
         type={"text"}
@@ -28,7 +28,10 @@ export default function QuestionForm({ handleAdd }) {
         onChange={handleChange}
         required={true}
       />
-      <button>New Question +</button>
+      <button>
+        <p>New Question</p>
+        <p>?</p>
+      </button>
     </form>
   );
 }

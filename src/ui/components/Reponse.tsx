@@ -1,3 +1,5 @@
+import trash from "../assets/img/trash.png";
+
 export default function Reponse({
   reponseInfo,
   onClick,
@@ -8,10 +10,12 @@ export default function Reponse({
   // comportements
   // affichage (render)
   return (
-    <li>
-      <input type={"checkbox"} checked={isSelected} onChange={onSelect} />
+    <li className={"li-response"}>
       {reponseInfo.nom}
-      <button onClick={onClick}>X</button>
+      <button className={"delete-response"} onClick={onClick}>
+        <img src={trash} alt={"delete response"} />
+      </button>
+      <input type={"radio"} checked={isSelected} onChange={onSelect} />
     </li>
   );
 }

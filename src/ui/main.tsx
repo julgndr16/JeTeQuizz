@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <h1>Profile</h1>,tu
+    element: <h1>Profile</h1>,
   },
 ]);
 

@@ -20,7 +20,7 @@ export default function ReponseForm({ handleAdd }) {
 
   // affichage (render)
   return (
-    <form action={"submit"} onSubmit={handleSubmit}>
+    <form action={"submit"} onSubmit={handleSubmit} className={"add-response"}>
       <input
         value={nouvelleReponse}
         type={"text"}
@@ -28,7 +28,7 @@ export default function ReponseForm({ handleAdd }) {
         onChange={handleChange}
         required={true}
       />
-      <button>Ajouter +</button>
+      <button>+</button>
     </form>
   );
 }

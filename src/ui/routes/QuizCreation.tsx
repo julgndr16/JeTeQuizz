@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Question from "../components/Question";
 import QuestionForm from "../components/QuestionForm";
+import Header from "../components/Header";
+import '../assets/style/createQuizz.css';
 
 function QuizCreation() {
   // state
@@ -36,9 +38,13 @@ function QuizCreation() {
   // affichage (render)
   return (
     <div>
-      <h1>Welcome to Quiz Creation ! Put your header here</h1>
-      <h2>Name of the quiz</h2>
-      <button>Create</button>
+      <Header />
+      <div className={"top-page"}>
+        <h2>Name of the quiz</h2>
+        <button className={"create-btn"}>
+          Create
+        </button>
+      </div>
       <ul>
         {questions.map((question) => (
           <Question

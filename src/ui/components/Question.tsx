@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Reponse from "./Reponse";
 import ReponseForm from "./ReponseForm";
+import trash from "../assets/img/trash.png";
 
 export default function Question({ questionInfo, onClick }) {
   // state
@@ -41,10 +42,12 @@ export default function Question({ questionInfo, onClick }) {
 
   // affichage (render)
   return (
-    <li>
-      {questionInfo.nom}
-      <button onClick={onClick}>X</button>
-      <ul>
+    <li className={"new-question"}>
+      <p className={"question-name"}>{questionInfo.nom}</p>
+      <button onClick={onClick} className={"delete-question"}>
+        <img src={trash} alt={"delete the question"}/>
+      </button>
+      <ul className={"list-response"}>
         {reponses.map((reponse) => (
           <Reponse
             reponseInfo={reponse}
