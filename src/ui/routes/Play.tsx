@@ -16,15 +16,19 @@ const Play = () => {
   }, [currentQuizzId]);
 
   useEffect(() => {
-    const fetchQuizz = async () =>{
-      const res = await fetch(`${url}quizz/${currentQuizzId}`);
-      const data = await res.json();
-      setQuestions(data.questions);
-    }
+    const fetchData = async () => {
+      fetch(url + "quizz?id=" + currentQuizzId)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setQuestions(data.questions);
+        });
+      // setQuestions(data.questions);
+    };
+    fetchData();
   }, );
-  const [questions, setQuestions] = useState([
 
-  ]);
+  const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [childData, setChildData] = useState<number | undefined>();
   const [answers, setAnswers] = useState<Array<number>>([]);
@@ -65,13 +69,13 @@ const Play = () => {
         padding: 0,
       }}
     >
-      <h1>Les capitales du monde</h1>
+      {/*<h1>Les capitales du monde</h1>*/}
       {currentQuestion && currentQuestionIndex != questions.length && (
         <QuestionCard
-          title={currentQuestion.title}
+          title={currentQuestion.question}
           numQuestion={currentQuestionIndex + 1}
           answers={currentQuestion.answers}
-          total={currentQuestion.total}
+          total={questions.length}
           onAnswer={handleAnswer}
         />
       )}

@@ -16,7 +16,8 @@ const QuestionCard: FC<IQuestionCardProps> = (props) => {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    //console.log(event.target.value);
+
+    console.log(event.target.value);
     props.onAnswer(event.target.value); // Ajoute cette ligne pour appeler la fonction onAnswer
 
   };
@@ -41,7 +42,7 @@ const QuestionCard: FC<IQuestionCardProps> = (props) => {
               key={index}
               value={answer.id}
               control={<Radio sx={{ mr: 1 }} />}
-              label={answer.name}
+              label={answer.answer}
               style={{
                 display: "flex",
                 flexDirection: "row-reverse",
