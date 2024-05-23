@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Reponse from "./Reponse";
 import ReponseForm from "./ReponseForm";
-import trash from "../assets/img/trash.png";
+import trash from "../../assets/img/trash.png";
 
 export default function Question({ questionInfo, onClick }) {
   // state

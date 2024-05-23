@@ -1,4 +1,4 @@
-import trash from "../assets/img/trash.png";
+import trash from "../../assets/img/trash.png";
 
 export default function Reponse({
   reponseInfo,

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Question from "../components/Question";
-import QuestionForm from "../components/QuestionForm";
+import Question from "../components/creationQuizz/Question";
+import QuestionForm from "../components/creationQuizz/QuestionForm";
 import Header from "../components/Header";
 import '../assets/style/createQuizz.css';
 
