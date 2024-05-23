@@ -9,11 +9,12 @@ import "@fontsource/roboto/700.css";
 import App from "./routes/App";
 import QuizCreation from "./routes/QuizCreation";
 
+
 export type IStore = {
-  init: boolean;
+  url : string;
 };
 
-export const store = createContext<IStore>({ init: false });
+export const store = createContext<IStore>({ url: "http://127.0.0.1:3001/" });
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <store.Provider value={{ init: true }}>
+    <store.Provider value={{ url: "http://127.0.0.1:3001/" }}>
       <RouterProvider router={router} />
     </store.Provider>
   </React.StrictMode>,
