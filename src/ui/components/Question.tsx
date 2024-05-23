@@ -8,6 +8,8 @@ export default function Question({ questionInfo, onClick }) {
     // { id: 1, nom: "Réponse 1" }
   ]);
 
+  const [bonneReponseID, setBonneReponseID] = useState(null);
+
   // comportements
   const handleDelete = (id) => {
     // 1. copie du state
@@ -33,6 +35,10 @@ export default function Question({ questionInfo, onClick }) {
     setReponses(reponseCopy);
   };
 
+  const handleSelect = (id) => {
+    setBonneReponseID(id);
+  };
+
   // affichage (render)
   return (
     <li>
@@ -43,6 +49,8 @@ export default function Question({ questionInfo, onClick }) {
           <Reponse
             reponseInfo={reponse}
             onClick={() => handleDelete(reponse.id)}
+            onSelect={() => handleSelect(reponse.id)}
+            isSelected={bonneReponseID === reponse.id}
             key={reponse.id}
           />
         ))}
