@@ -73,28 +73,31 @@ export type question = Static<typeof questionSchema>;
 
 // Result of a quizz
 
-const postGameQuerySchema = t.Object({
+export const postGameQuerySchema = t.Object({
   idQuizz: t.Number(),
 });
 
-const postGameBodySchema = t.Object({
-  answers: t.Array(t.Number()),
+export const postGameBodySchema = t.Object({
+  answers: t.Array(t.Object({ idQuestion: t.Number(), idAnswer: t.Number() })),
+  idUser: t.Number(),
 });
 
-const postGameResponseSchema = t.Object({
+export const postGameResponseSchema = t.Object({
   idQuizz: t.Number(),
   score: t.Number(),
   date: t.String(),
   idUser: t.Number(),
 });
 
+export type postGameResponse = Static<typeof postGameResponseSchema>;
+
 // User
 
-const getUserQuerySchema = t.Object({
+export const getUserQuerySchema = t.Object({
   id: t.Number(),
 });
 
-const getUserResponseSchema = userSchema;
+export const getUserResponseSchema = userSchema;
 
 // bests scores
 
@@ -102,7 +105,7 @@ const getBestScoresQuerySchema = t.Object({
   idQuizz: t.Number(),
 });
 
-const getBestScoresResponseSchema = t.Array(
+export const getBestScoresResponseSchema = t.Array(
   t.Object({
     score: t.Number(),
     date: t.String(),

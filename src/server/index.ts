@@ -9,6 +9,7 @@ const main = async () => {
     await Promise.all([
       await import("./routes/quizzes"),
       await import("./routes/quizz"),
+      await import("./routes/game"),
     ]);
 
     await server.listen({

@@ -21,7 +21,10 @@ export const configurePlugins = async () => {
     swagger: {
       consumes: ["application/json", "multipart/form-data"],
       produces: ["application/json"],
-      tags: [{ name: "Quizz", description: "Quizz related end-points" }],
+      tags: [
+        { name: "Quizz", description: "Quizz related end-points" },
+        { name: "Game", description: "Game related end-points" },
+      ],
     },
   });
   await server.register(cors);
