@@ -101,7 +101,7 @@ export const getUserResponseSchema = userSchema;
 
 // bests scores
 
-const getBestScoresQuerySchema = t.Object({
+export const getBestScoresQuerySchema = t.Object({
   idQuizz: t.Number(),
 });
 
@@ -112,3 +112,5 @@ export const getBestScoresResponseSchema = t.Array(
     user: userSchema,
   }),
 );
+
+export type getBestScoresResponse = Static<typeof getBestScoresResponseSchema>;
