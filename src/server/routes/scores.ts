@@ -16,7 +16,7 @@ server.get(
         200: getBestScoresResponseSchema,
         400: errorResponseSchema,
       },
-      tags: ["Game"],
+      tags: ["Quizz"],
     },
   },
   async function (request, reply): Promise<getBestScoresResponse> {
