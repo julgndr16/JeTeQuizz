@@ -1208,7 +1208,6 @@ __metadata:
   checksum: 10/89d9c2db5be484b9fdbc45e4ce534cb44b62d76b3a29da6f8f09f42b8fb154ab1e4e7c2a281a121b94a2b34a4c2857464e944e58fccc83804e1c2816a494f1eb
   languageName: node
   linkType: hard
-
 "@remix-run/router@npm:1.16.1":
   version: 1.16.1
   resolution: "@remix-run/router@npm:1.16.1"

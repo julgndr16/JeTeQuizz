@@ -19,6 +19,7 @@ const userSchema = t.Object({
   name: t.String(),
 });
 
+
 export const getQuizzesQuerySchema = t.Object({
   level: t.Optional(t.Number()),
   maxQuestions: t.Optional(t.Number()),
