@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -7,13 +7,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import App from "./routes/App";
-
-
-export type IStore = {
-  url : string;
-};
-
-export const store = createContext<IStore>({ url: "http://127.0.0.1:3001/" });
+import StoreProvider from "./StoreProvider";
 
 const router = createBrowserRouter([
   {
@@ -32,8 +26,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <store.Provider value={{ url: "http://127.0.0.1:3001/" }}>
+    <StoreProvider url={"http://127.0.0.1:3001/"}>
       <RouterProvider router={router} />
-    </store.Provider>
+    </StoreProvider>
   </React.StrictMode>,
 );

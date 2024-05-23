@@ -4,6 +4,7 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import fastify from "fastify";
 import { ajvFilePlugin } from "@fastify/multipart";
+import cors from "@fastify/cors";
 
 export const server = fastify({
   logger: true,
@@ -23,6 +24,7 @@ export const configurePlugins = async () => {
       tags: [{ name: "Quizz", description: "Quizz related end-points" }],
     },
   });
+  await server.register(cors);
   await server.register(fastifySwaggerUi, {
     routePrefix: "/docs",
   });
