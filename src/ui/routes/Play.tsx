@@ -1,41 +1,64 @@
-import React, {useContext, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import QuestionCard from "../components/QuestionCard";
 import Button from "@mui/material/Button";
-import {store} from "../main";
-
-
-
-
+import { store } from "../StoreProvider";
+import { useNavigate } from "react-router-dom";
 
 const Play = () => {
+  const { currentQuizzId, setCurrentQuizzId } = useContext(store);
 
-    const {init} = useContext(store);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!currentQuizzId) {
+      navigate("/");
+    }
+  }, [currentQuizzId]);
 
   const [questions, setQuestions] = useState([
     {
       title: "Quelle est la capitale de la France ?",
-      answers: [{id: 1, name: "Paris"}, {id: 2, name: "Londres"}, {id: 3, name: "Lisbonne"}, {id: 4, name: "Berlin"}],
+      answers: [
+        { id: 1, name: "Paris" },
+        { id: 2, name: "Londres" },
+        { id: 3, name: "Lisbonne" },
+        { id: 4, name: "Berlin" },
+      ],
       total: 4,
     },
     {
       title: "Quelle est la capitale de l'Espagne ?",
-      answers: [{id: 5, name: "Paris"}, {id: 6, name: "Madrid"}, {id: 7, name: "New York"}, {id: 8, name: "Berlin"}],
+      answers: [
+        { id: 5, name: "Paris" },
+        { id: 6, name: "Madrid" },
+        { id: 7, name: "New York" },
+        { id: 8, name: "Berlin" },
+      ],
       total: 4,
     },
     {
       title: "Quelle est la capitale de l'Allemagne ?",
-      answers: [{id: 9, name: "Dublin"}, {id: 10, name: "Londres"}, {id: 11, name: "Berlin"}, {id: 12, name: "Rome"}],
+      answers: [
+        { id: 9, name: "Dublin" },
+        { id: 10, name: "Londres" },
+        { id: 11, name: "Berlin" },
+        { id: 12, name: "Rome" },
+      ],
       total: 4,
     },
     {
       title: "Quelle est la capitale de l'Italie ?",
-      answers: [{id: 13, name: "Paris"}, {id: 14, name: "Londres"}, {id: 15, name: "Rome"}, {id: 16, name: "Berlin"}],
+      answers: [
+        { id: 13, name: "Paris" },
+        { id: 14, name: "Londres" },
+        { id: 15, name: "Rome" },
+        { id: 16, name: "Berlin" },
+      ],
       total: 4,
     },
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [childData, setChildData] = useState<number|undefined>();
+  const [childData, setChildData] = useState<number | undefined>();
   const [answers, setAnswers] = useState<Array<number>>([]);
   const handleAnswer = (selectedAnswerIndex) => {
     setChildData(selectedAnswerIndex);
@@ -45,18 +68,21 @@ const Play = () => {
 
   const updateQuestion = () => {
     if (childData) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setChildData(undefined);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setChildData(undefined);
     }
-
   };
-   const endQuizz = async () => {
-       if (childData) {
-           setCurrentQuestionIndex(currentQuestionIndex + 1);
-           setChildData(undefined);
-       }
-       const res = await fetch(`http://localhost:3001/game?${0}`, {body:JSON.stringify({answers}), method: "POST"})
-   }
+  const endQuizz = async () => {
+    if (childData) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setChildData(undefined);
+    }
+    const res = await fetch(`http://localhost:3001/game?${currentQuizzId}`, {
+      body: JSON.stringify({ answers }),
+      method: "POST",
+    });
+    setCurrentQuizzId && setCurrentQuizzId(undefined);
+  };
   const currentQuestion = questions[currentQuestionIndex];
   return (
     <div
@@ -100,11 +126,12 @@ const Play = () => {
         <Button
           variant="contained"
           style={{
-              width: "calc(40vw + 30px)",
+            width: "calc(40vw + 30px)",
             backgroundColor: "#9B69FF",
             color: "white",
-              paddingRight: 15,
-              paddingLeft: 15,          }}
+            paddingRight: 15,
+            paddingLeft: 15,
+          }}
           onClick={() => endQuizz()}
         >
           Finishhhh !
