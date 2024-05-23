@@ -41,6 +41,7 @@
   "scripts": {
     "dev:ui": "vite --port 3000 --open",
     "dev:server": "tsx --watch src/server/index.ts",
+    "setup_prisma": "prisma db pull && prisma generate && echo Prisma setup done! || echo Prisma setup failed!",
     "clean": "rimraf dist && echo Clean done! || echo Clean failed!",
     "build:ui": "echo Build UI... && vite build --emptyOutDir && echo Build UI done! || echo Build UI failed!",
     "build:server": "echo Build Server... && tsc src/server/index.ts --outDir dist/server && echo Build Server done! || echo Build Server failed!",
