@@ -5,7 +5,7 @@ import QuestionForm from "../components/QuestionForm";
 function QuizCreation() {
   // state
   const [questions, setQuestions] = useState([
-    { id: 1, nom: "Question Title 1" },
+    // { id: 1, nom: "Question Title 1" },
   ]);
 
   // comportements
@@ -26,7 +26,7 @@ function QuizCreation() {
     // 1. copie du state
     const questionsCopy = [...questions];
 
-    // 2. manimulation du state
+    // 2. manipulation du state
     questionsCopy.push(questionAAjouter);
 
     // 3. modifier mon state avec le setter

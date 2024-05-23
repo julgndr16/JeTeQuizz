@@ -26,6 +26,7 @@ export default function QuestionForm({ handleAdd }) {
         type={"text"}
         placeholder={"Ajouter une question..."}
         onChange={handleChange}
+        required={true}
       />
       <button>New Question +</button>
     </form>
