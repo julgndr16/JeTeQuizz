@@ -1,7 +1,7 @@
 import { FunctionComponent, useContext, useEffect } from "react";
 import Header from "../components/Header";
 import Grid from "../components/Grid";
-import { store } from "../main";
+import { store } from "../StoreProvider";
 
 const App: FunctionComponent = () => {
   useEffect(() => {
@@ -15,14 +15,16 @@ const App: FunctionComponent = () => {
   console.log(s);
 
   return (
-    <div style={{
-      backgroundColor: "#FBFBFB",
-      width: "100%",
-      height: "100%",
-      overflowX: "hidden",
-      margin: "0 0",
-      padding: "0 0",
-    }}>
+    <div
+      style={{
+        backgroundColor: "#FBFBFB",
+        width: "100%",
+        height: "100%",
+        overflowX: "hidden",
+        margin: "0 0",
+        padding: "0 0",
+      }}
+    >
       <Header />
       <Grid />
     </div>
