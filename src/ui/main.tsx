@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, {createContext, Dispatch} from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -11,9 +11,11 @@ import Play from "./routes/Play";
 
 export type IStore = {
   init: boolean;
+  currentQuizzId?: number;
+  setCurrentQuizzId?: Dispatch<number>
 };
 
-export const store = createContext<IStore>({ init: false });
+export const store = createContext<IStore>({ init: false});
 
 const router = createBrowserRouter([
   {
