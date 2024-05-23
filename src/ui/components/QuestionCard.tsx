@@ -1,13 +1,13 @@
 import Paper from "@mui/material/Paper";
 import Radio from "@mui/material/Radio";
 import { FormControlLabel, RadioGroup } from "@mui/material";
-import { FC, useState } from "react";
+import {FC, useEffect, useState} from "react";
 
 type IQuestionCardProps = {
   title: string;
   numQuestion: number;
   total: number;
-  answers: string[];
+  answers: [];
   onAnswer: (selectedAnswer: string) => void;
 };
 
@@ -18,6 +18,7 @@ const QuestionCard: FC<IQuestionCardProps> = (props) => {
     setSelectedValue(event.target.value);
     //console.log(event.target.value);
     props.onAnswer(event.target.value); // Ajoute cette ligne pour appeler la fonction onAnswer
+
   };
 
   return (
@@ -38,9 +39,9 @@ const QuestionCard: FC<IQuestionCardProps> = (props) => {
           {props.answers.map((answer, index) => (
             <FormControlLabel
               key={index}
-              value={answer}
+              value={answer.id}
               control={<Radio sx={{ mr: 1 }} />}
-              label={answer}
+              label={answer.name}
               style={{
                 display: "flex",
                 flexDirection: "row-reverse",
