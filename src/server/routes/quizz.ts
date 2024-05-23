@@ -1,8 +1,11 @@
 import { server } from "../providers/server";
 import {
+  answer,
   errorResponseSchema,
   getQuizzQuerySchema,
+  getQuizzResponse,
   getQuizzResponseSchema,
+  question,
 } from "../schemas/schemas";
 import { db } from "../providers/db";
 
@@ -18,7 +21,7 @@ server.get(
       tags: ["Quizz"],
     },
   },
-  async function (request, reply) {
+  async function (request, reply): Promise<getQuizzResponse> {
     const { id } = request.query;
 
     if (!id) {
@@ -51,10 +54,33 @@ server.get(
       });
     }
 
-    const questions = await Promise.all(
-      dbQuestions.map(async (dbQuestion) => {}),
+    const questions: Array<question> = await Promise.all(
+      dbQuestions.map(async (dbQuestion) => {
+        const dbAnswers = await db.response.findMany({
+          where: { idQuestion: dbQuestion.id },
+        });
+        const answers: Array<answer> = dbAnswers.map((dbAnswer) => ({
+          id: dbAnswer.id,
+          answer: dbAnswer.name,
+        }));
+        return {
+          id: dbQuestion.id,
+          question: dbQuestion.name,
+          answers: answers,
+          correctAnswerId: dbQuestion.idGoodRep,
+        };
+      }),
     );
 
-    return {};
+    return {
+      id: quizz.id,
+      name: quizz.name,
+      level: quizz.level,
+      questions: questions,
+      creator: {
+        id: creator.id,
+        name: creator.pseudo,
+      },
+    };
   },
 );
