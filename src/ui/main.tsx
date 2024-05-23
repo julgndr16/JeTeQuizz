@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -8,6 +8,9 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import App from "./routes/App";
 import StoreProvider from "./StoreProvider";
+import Profile from "./routes/Profile";
+import Login from "./routes/Login";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter([
   {
@@ -20,14 +23,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <h1>Profile</h1>,
+    element: <Profile />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <StoreProvider url={"http://127.0.0.1:3001/"}>
-      <RouterProvider router={router} />
-    </StoreProvider>
-  </React.StrictMode>,
+  <GoogleOAuthProvider
+    clientId={
+      "6682931847-m9n28e91u7a0uk2eas82p7krn0mbnofq.apps.googleusercontent.com"
+    }
+  >
+    <React.StrictMode>
+      <StoreProvider url={"http://127.0.0.1:3001/"}>
+        <RouterProvider router={router} />
+      </StoreProvider>
+    </React.StrictMode>
+  </GoogleOAuthProvider>,
 );
