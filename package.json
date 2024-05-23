@@ -13,6 +13,7 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@prisma/client": "^5.14.0",
+    "@react-oauth/google": "^0.12.1",
     "@sinclair/typebox": "^0.32.22",
     "fastify": "^4.26.2",
     "react": "^18.3.1",
