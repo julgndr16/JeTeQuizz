@@ -6,7 +6,12 @@ const main = async () => {
   try {
     await configurePlugins();
 
-    await Promise.all([await import("./routes/quizzes")]);
+    await Promise.all([
+      await import("./routes/quizzes"),
+      await import("./routes/quizz"),
+      await import("./routes/game"),
+      await import("./routes/scores"),
+    ]);
 
     await server.listen({
       port: Number(SERVER_PORT),

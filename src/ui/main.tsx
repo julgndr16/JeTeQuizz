@@ -8,6 +8,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import App from "./routes/App";
 import StoreProvider from "./StoreProvider";
+import Play from "./routes/Play";
 import Profile from "./routes/Profile";
 import Login from "./routes/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/play",
+    element: <Play />,
   },
 ]);
 
