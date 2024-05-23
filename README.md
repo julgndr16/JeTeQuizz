@@ -12,6 +12,7 @@ Below is an explanation of each script defined in the `package.json` file:
 
 - **`dev:ui`**: Starts the frontend development server using Vite on port 3000 and opens it in the default web browser.
 - **`dev:server`**: Starts the backend development server using tsx, watching for changes in the src/server/index.ts file.
+- **`setup_prisma`**: Pull db to generate prisma schema and generate client according to schema.
 
 ### Build Scripts
 
