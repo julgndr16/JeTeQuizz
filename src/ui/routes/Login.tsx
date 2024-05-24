@@ -36,7 +36,7 @@ const Login: FC<ILoginProps> = () => {
 
   const fecthUserData = async () => {
     if (tokens) {
-      const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?`, {
+      const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
         headers: {
           Authorization: `Bearer ${tokens.access_token}`,
           Accept: "application/json",
