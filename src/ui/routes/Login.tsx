@@ -36,7 +36,7 @@ const Login: FC<ILoginProps> = () => {
 
   const fecthUserData = async () => {
     if (tokens) {
-      const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+      const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?`, {
         headers: {
           Authorization: `Bearer ${tokens.access_token}`,
           Accept: "application/json",
@@ -60,34 +60,33 @@ const Login: FC<ILoginProps> = () => {
         });
         const newUser = await user.json();
         setUser({
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          access_token: tokens.access_token,
-          refresh_token: tokens.refresh_token,
-          id_token: tokens.id_token,
-          profile_picture: data.picture,
+          id: newUser.id ?? -1,
+          name: newUser.name ?? "",
+          email: newUser.email ?? "",
+          access_token: tokens.access_token ?? "",
+          refresh_token: tokens.refresh_token ?? "",
+          id_token: tokens.id_token ?? "",
+          profile_picture: data.picture ?? "",
         });
         return;
       }
       setUser({
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        profile_picture: data.picture,
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        id_token: tokens.id_token,
+        id: dbUser.id ?? -1,
+        name: dbUser.name ?? "",
+        email: dbUser.email ?? "",
+        profile_picture: data.picture ?? "",
+        access_token: tokens.access_token ?? "",
+        refresh_token: tokens.refresh_token ?? "",
+        id_token: tokens.id_token ?? "",
       });
     }
   };
 
   useEffect(() => {
     if (tokens) {
-      fecthUserData();
-      setTimeout(() => {
+      fecthUserData().then(() => setTimeout(() => {
         navigate("/profile");
-      }, 200);
+      }, 200));
     }
   }, [tokens]);
 
