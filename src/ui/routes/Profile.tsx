@@ -51,7 +51,6 @@ const Profile = () => {
         {quizzes.map((quizz) => (
           <div>
             <CardQuizz quizz={quizz} url={url} />
-
           </div>
         ))}
       </div>
