@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import ResultUser from "../components/ResultUser";
 import '../assets/style/Play.css';
 import TabScore from "../components/TabScore";
+import loader from "../assets/img/loader.svg";
 
 const Play = () => {
   const { currentQuizzId, setCurrentQuizzId, url } = useContext(store);
@@ -15,6 +16,7 @@ const Play = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [childData, setChildData] = useState();
   const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -28,13 +30,16 @@ const Play = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      fetch(url + "quizz?id=" + currentQuizzId)
+      setLoading(true);
+      setTimeout(() =>{
+        fetch(url + "quizz?id=" + currentQuizzId)
         .then((res) => res.json())
         .then((data) => {
           setNameQuizz(data.name);
           setQuestions(data.questions);
+          setLoading(false);
         });
-      // setQuestions(data.questions);
+      }, 500);
     };
     fetchData();
   }, []);
@@ -117,52 +122,59 @@ const Play = () => {
         marginTop: "90px",
       }}
     >
-      <Header />
-      <h1>{nameQuizz}</h1>
-      {currentQuestion && currentQuestionIndex != questions.length && (
-        <QuestionCard
-          title={currentQuestion.question}
-          numQuestion={currentQuestionIndex + 1}
-          answers={currentQuestion.answers}
-          total={questions.length}
-          onAnswer={handleAnswer}
-        />
-      )}
-      {currentQuestionIndex < questions.length - 1 && (
-        <Button
-          variant="contained"
-          style={{
-            width: "calc(40vw + 30px)",
-            backgroundColor: "#9B69FF",
-            color: "white",
-            paddingRight: 15,
-            paddingLeft: 15,
-          }}
-          onClick={() => updateQuestion()}
-        >
-          Next
-        </Button>
-      )}
-      {currentQuestionIndex == questions.length - 1 && (
-        <Button
-          variant="contained"
-          style={{
-            width: "calc(40vw + 30px)",
-            backgroundColor: "#9B69FF",
-            color: "white",
-            paddingRight: 15,
-            paddingLeft: 15,
-          }}
-          onClick={() => endQuizz()}
-        >
-          Finishhhh !
-        </Button>
-      )}
-      {currentQuestionIndex == questions.length && (
-        <h1>Quizz terminé</h1>
+      {loading ? (
+        <img src={loader} alt="Loading..." width={"50px"} />
+      ) : (
+        <>
+          <Header />
+          <h1>{nameQuizz}</h1>
+          {currentQuestion && currentQuestionIndex != questions.length && (
+            <QuestionCard
+              title={currentQuestion.question}
+              numQuestion={currentQuestionIndex + 1}
+              answers={currentQuestion.answers}
+              total={questions.length}
+              onAnswer={handleAnswer}
+            />
+          )}
+          {currentQuestionIndex < questions.length - 1 && (
+            <Button
+              variant="contained"
+              style={{
+                width: "calc(40vw + 30px)",
+                backgroundColor: "#9B69FF",
+                color: "white",
+                paddingRight: 15,
+                paddingLeft: 15,
+              }}
+              onClick={() => updateQuestion()}
+            >
+              Next
+            </Button>
+          )}
+          {currentQuestionIndex == questions.length - 1 && (
+            <Button
+              variant="contained"
+              style={{
+                width: "calc(40vw + 30px)",
+                backgroundColor: "#9B69FF",
+                color: "white",
+                paddingRight: 15,
+                paddingLeft: 15,
+              }}
+              onClick={() => endQuizz()}
+            >
+              Finishhhh !
+            </Button>
+          )}
+          {currentQuestionIndex == questions.length && (
+            <h1>Quizz terminé</h1>
+          )}
+        </>
       )}
     </div>
   );
+
 };
 
 export default Play;
