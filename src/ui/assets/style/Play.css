@@ -1,0 +1,18 @@
+body{
+
+    font-family: 'Quicksand Light', sans-serif;
+    font-weight: normal;
+
+}
+
+body h1{
+    font-family: 'Quicksand Bold', sans-serif;
+    font-weight: normal;
+}
+
+.box{
+    flex-basis: 50%;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+}

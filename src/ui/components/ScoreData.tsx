@@ -2,19 +2,26 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { FC } from 'react';
 type ScoreDataProps = {
   name: string;
-  value: number;
+  value: string | number
   color: string;
 
 };
 
 const ScoreData: FC<ScoreDataProps>=(props) => {
     return (
-      <div>
-        <div style={{display: "flex", alignItems:"center"}}>
-            <FiberManualRecordIcon style={{color:"#9B69FF", marginRight: "10px"}}/>
-            <h3 style={{margin: "0"}}>{props.value}</h3>
+
+      <div className="box" style={{display: "flex"}}>
+          <div style={{paddingTop:"8px"}}>
+            <FiberManualRecordIcon style={{color:props.color, marginRight: "10px"}}/>
+          </div>
+        <div>
+          <div>
+            <h1 style={{margin: "0", color: props.color,textAlign: "start"}}>{props.value}</h1>
+          </div>
+          <div>
+            <h1 style={{margin: "0 0 0 0"}}>{props.name}</h1>
+          </div>
         </div>
-            <h3 style={{margin:"0 0 0 0"}}>{props.name}</h3>
       </div>
     );
 }

@@ -5,10 +5,13 @@ import { store } from "../StoreProvider";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ResultUser from "../components/ResultUser";
+import '../assets/style/Play.css';
+import TabScore from "../components/TabScore";
 
 const Play = () => {
   const { currentQuizzId, setCurrentQuizzId, url } = useContext(store);
   const [questions, setQuestions] = useState([]);
+  const [ nameQuizz, setNameQuizz] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [childData, setChildData] = useState();
   const [answers, setAnswers] = useState([]);
@@ -28,7 +31,7 @@ const Play = () => {
       fetch(url + "quizz?id=" + currentQuizzId)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          setNameQuizz(data.name);
           setQuestions(data.questions);
         });
       // setQuestions(data.questions);
@@ -67,6 +70,8 @@ const Play = () => {
       body: JSON.stringify({ answers: [...answers,{idQuestion: currentQuestion.id ,idAnswer: parseInt(childData)}], idUser: 1}),
       method: "POST",
     }).then((res) => res.json()).then((data) => { makeScore(data);});
+
+
     // setCurrentQuizzId && setCurrentQuizzId(undefined);
   };
 
@@ -81,7 +86,21 @@ const Play = () => {
     console.log("AFFICHAGE SCORE");
     console.log(score);
     const total = questions.length;
-    return <ResultUser score={score.score} total={total} />;
+    return <div id="playbody"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  height: "100%",
+                  margin: 0,
+                  padding: 0,
+                  marginTop: "90px",
+                }}>
+                <Header />
+                <h1>{nameQuizz}</h1>
+      <ResultUser score={score.score} total={total} />
+      <TabScore quizzId={currentQuizzId}/></div>;
   }
 
   return (
@@ -99,7 +118,7 @@ const Play = () => {
       }}
     >
       <Header />
-      {/*<h1>Les capitales du monde</h1>*/}
+      <h1>{nameQuizz}</h1>
       {currentQuestion && currentQuestionIndex != questions.length && (
         <QuestionCard
           title={currentQuestion.question}

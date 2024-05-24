@@ -49,6 +49,7 @@ const QuestionCard: FC<IQuestionCardProps> = (props) => {
                 justifyContent: "space-between",
                 margin: 5,
                 padding: 3,
+                paddingLeft: 10,
               }}
               sx={{
                 border: "2px solid #A4A4A4",

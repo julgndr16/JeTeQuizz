@@ -16,11 +16,10 @@ const ResultUser: FC<ResultUserProps> = (props) => {
           width: "40vw",
         }}
       >
-        <div style={{display:"inline"}}>
-          <ScoreData name="Co" value={100} color="#9B69FF"/>
-          <ScoreData name="Total Question" value={14} color="#9B69FF"/>
-        </div>
-        <div>
+        <div style={{display:"flex",flexWrap:"wrap"}}>
+          <ScoreData  name="Completion" value={props.score*100/props.total+"%"} color="#9B69FF"/>
+          <ScoreData name="Total Question" value={props.total} color="#9B69FF"/>
+
           <ScoreData name="Correct" value={props.score} color="#1F9C4A"/>
           <ScoreData name="Wrong" value={props.total - props.score} color="#D40000"/>
         </div>
