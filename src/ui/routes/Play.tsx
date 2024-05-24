@@ -33,17 +33,17 @@ const Play = () => {
     fetchData();
   }, []);
   
-  useEffect(() => {
-    if(answers.length == questions.length) {
-      fetch(url + "game?idQuizz=" + currentQuizzId, {
-        body: JSON.stringify({ answers: answers, idUser: 1}),
-        method: "POST",
-        })
-        .then((res) => res.json())
-        .then((data) => { console.log(data); })
-    } 
-  }, [answers]);
-  
+  // useEffect(() => {
+  //   if(answers.length == questions.length) {
+  //     fetch(url + "game?idQuizz=" + currentQuizzId, {
+  //       body: JSON.stringify({ answers: answers, idUser: 1}),
+  //       method: "POST",
+  //       })
+  //       .then((res) => res.json())
+  //       .then((data) => { console.log(data); })
+  //   }
+  // }, [answers]);
+  //
 
   const handleAnswer = (selectedAnswerIndex) => {
     setChildData(selectedAnswerIndex);
@@ -60,7 +60,8 @@ const Play = () => {
 
   const endQuizz = async () => {
     fetch(url + "game?idQuizz=" + currentQuizzId, {
-      body: JSON.stringify({ answers: answers, idUser: 1}),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ answers: [...answers,{idQuestion: currentQuestion.id ,idAnswer: parseInt(childData)}], idUser: 1}),
       method: "POST",
     }).then((res) => res.json()).then((data) => { console.log(data); })
     setCurrentQuizzId && setCurrentQuizzId(undefined);
@@ -116,7 +117,7 @@ const Play = () => {
             paddingRight: 15,
             paddingLeft: 15,
           }}
-          onClick={() => updateQuestion()}
+          onClick={() => endQuizz()}
         >
           Finishhhh !
         </Button>

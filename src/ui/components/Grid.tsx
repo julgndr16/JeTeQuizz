@@ -44,7 +44,6 @@ const Grid: FunctionComponent = () => {
             />
           ))}
       </div>
-      <ResultUser/>
     </div>
   );
 };
