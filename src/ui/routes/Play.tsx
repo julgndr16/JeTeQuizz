@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { store } from "../StoreProvider";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import ResultUser from "../components/ResultUser";
 
 const Play = () => {
   const { currentQuizzId, setCurrentQuizzId, url } = useContext(store);
@@ -13,6 +14,8 @@ const Play = () => {
   const [answers, setAnswers] = useState([]);
 
   const navigate = useNavigate();
+
+  const [score, setScore] = useState(undefined);
 
   useEffect(() => {
     if (!currentQuizzId) {
@@ -63,10 +66,24 @@ const Play = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ answers: [...answers,{idQuestion: currentQuestion.id ,idAnswer: parseInt(childData)}], idUser: 1}),
       method: "POST",
-    }).then((res) => res.json()).then((data) => { console.log(data); })
-    setCurrentQuizzId && setCurrentQuizzId(undefined);
+    }).then((res) => res.json()).then((data) => { makeScore(data);});
+    // setCurrentQuizzId && setCurrentQuizzId(undefined);
   };
+
+  const makeScore  = async (score_) => {
+    console.log(score_);
+    setScore(score_);
+  };
+
   const currentQuestion = questions[currentQuestionIndex];
+
+  if(score){
+    console.log("AFFICHAGE SCORE");
+    console.log(score);
+    const total = questions.length;
+    return <ResultUser score={score.score} total={total} />;
+  }
+
   return (
     <div
       id="playbody"

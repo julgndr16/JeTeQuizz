@@ -1,7 +1,11 @@
 import Paper from "@mui/material/Paper";
 import ScoreData from "./ScoreData";
 
-type ResultUserProps = {};
+
+type ResultUserProps = {
+  score: number;
+  total: number;
+};
 const ResultUser: FC<ResultUserProps> = (props) => {
   return (
   <Paper
@@ -17,8 +21,8 @@ const ResultUser: FC<ResultUserProps> = (props) => {
           <ScoreData name="Total Question" value={14} color="#9B69FF"/>
         </div>
         <div>
-          <ScoreData name="Correct" value={10} color="#1F9C4A"/>
-          <ScoreData name="Wrong" value={4} color="#D40000"/>
+          <ScoreData name="Correct" value={props.score} color="#1F9C4A"/>
+          <ScoreData name="Wrong" value={props.total - props.score} color="#D40000"/>
         </div>
         
   </Paper>
