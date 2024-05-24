@@ -3,9 +3,14 @@ import QuestionCard from "../components/QuestionCard";
 import Button from "@mui/material/Button";
 import { store } from "../StoreProvider";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 const Play = () => {
   const { currentQuizzId, setCurrentQuizzId, url } = useContext(store);
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [childData, setChildData] = useState();
+  const [answers, setAnswers] = useState([]);
 
   const navigate = useNavigate();
 
@@ -16,39 +21,48 @@ const Play = () => {
   }, [currentQuizzId]);
 
   useEffect(() => {
-    const fetchQuizz = async () =>{
-      const res = await fetch(`${url}quizz/${currentQuizzId}`);
-      const data = await res.json();
-      setQuestions(data.questions);
-    }
-  }, );
-  const [questions, setQuestions] = useState([
+    const fetchData = async () => {
+      fetch(url + "quizz?id=" + currentQuizzId)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setQuestions(data.questions);
+        });
+      // setQuestions(data.questions);
+    };
+    fetchData();
+  }, []);
+  
+  useEffect(() => {
+    if(answers.length == questions.length) {
+      fetch(url + "game?idQuizz=" + currentQuizzId, {
+        body: JSON.stringify({ answers: answers, idUser: 1}),
+        method: "POST",
+        })
+        .then((res) => res.json())
+        .then((data) => { console.log(data); })
+    } 
+  }, [answers]);
+  
 
-  ]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [childData, setChildData] = useState<number | undefined>();
-  const [answers, setAnswers] = useState<Array<number>>([]);
   const handleAnswer = (selectedAnswerIndex) => {
     setChildData(selectedAnswerIndex);
-    setAnswers([...answers, selectedAnswerIndex]);
-    console.log("Reponse selectionnée : " + selectedAnswerIndex);
   };
 
   const updateQuestion = () => {
     if (childData) {
+      setAnswers([...answers, {idQuestion: currentQuestion.id ,idAnswer: parseInt(childData)}]);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setChildData(undefined);
     }
+    
   };
+
   const endQuizz = async () => {
-    if (childData) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setChildData(undefined);
-    }
-    const res = await fetch(`http://localhost:3001/game?${currentQuizzId}`, {
-      body: JSON.stringify({ answers }),
+    fetch(url + "game?idQuizz=" + currentQuizzId, {
+      body: JSON.stringify({ answers: answers, idUser: 1}),
       method: "POST",
-    });
+    }).then((res) => res.json()).then((data) => { console.log(data); })
     setCurrentQuizzId && setCurrentQuizzId(undefined);
   };
   const currentQuestion = questions[currentQuestionIndex];
@@ -63,15 +77,17 @@ const Play = () => {
         height: "100%",
         margin: 0,
         padding: 0,
+        marginTop: "90px",
       }}
     >
-      <h1>Les capitales du monde</h1>
+      <Header />
+      {/*<h1>Les capitales du monde</h1>*/}
       {currentQuestion && currentQuestionIndex != questions.length && (
         <QuestionCard
-          title={currentQuestion.title}
+          title={currentQuestion.question}
           numQuestion={currentQuestionIndex + 1}
           answers={currentQuestion.answers}
-          total={currentQuestion.total}
+          total={questions.length}
           onAnswer={handleAnswer}
         />
       )}
@@ -87,7 +103,7 @@ const Play = () => {
           }}
           onClick={() => updateQuestion()}
         >
-          Next 🢂
+          Next
         </Button>
       )}
       {currentQuestionIndex == questions.length - 1 && (
@@ -100,7 +116,7 @@ const Play = () => {
             paddingRight: 15,
             paddingLeft: 15,
           }}
-          onClick={() => endQuizz()}
+          onClick={() => updateQuestion()}
         >
           Finishhhh !
         </Button>
