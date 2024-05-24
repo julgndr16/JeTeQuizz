@@ -47,7 +47,7 @@ server.get(
     if (creator && user && creator === user) {
       return reply
         .code(400)
-        .send({ error: "Creator and user must be different" });
+        .send({ error: "Creator and user.ts must be different" });
     }
 
     const dbQuizzes = await db.quizz.findMany({

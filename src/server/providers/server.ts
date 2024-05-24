@@ -24,6 +24,8 @@ export const configurePlugins = async () => {
       tags: [
         { name: "Quizz", description: "Quizz related end-points" },
         { name: "Game", description: "Game related end-points" },
+        { name: "Auth", description: "Auth related end-points" },
+        { name: "User", description: "User related end-points" },
       ],
     },
   });

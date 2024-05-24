@@ -16,9 +16,11 @@
     "@react-oauth/google": "^0.12.1",
     "@sinclair/typebox": "^0.32.22",
     "fastify": "^4.26.2",
+    "google-auth-library": "^9.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",

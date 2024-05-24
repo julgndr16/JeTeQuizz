@@ -11,6 +11,8 @@ const main = async () => {
       await import("./routes/quizz"),
       await import("./routes/game"),
       await import("./routes/scores"),
+      await import("./routes/auth"),
+      await import("./routes/user"),
     ]);
 
     await server.listen({

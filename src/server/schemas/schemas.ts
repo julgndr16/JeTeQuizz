@@ -120,10 +120,36 @@ export type postGameResponse = Static<typeof postGameResponseSchema>;
 // User
 
 export const getUserQuerySchema = t.Object({
-  id: t.Number(),
+  email: t.String(),
 });
 
-export const getUserResponseSchema = userSchema;
+export const getUserResponseSchema = t.Object({
+  id: t.Number(),
+  name: t.String(),
+  email: t.String(),
+  token_expiration: t.String(),
+});
+
+export type getUserResponse = Static<typeof getUserResponseSchema>;
+
+export const postUserBodySchema = t.Object({
+  email: t.String(),
+  name: t.String(),
+  token_expiration: t.String(),
+});
+
+export const postUserResponseSchema = t.Object({
+  id: t.Number(),
+  name: t.String(),
+  email: t.String(),
+});
+
+export type postUserResponse = Static<typeof postUserResponseSchema>;
+
+export const putUserTokenQuerySchema = t.Object({
+  id: t.Number(),
+  token_expiration: t.String(),
+});
 
 // bests scores
 

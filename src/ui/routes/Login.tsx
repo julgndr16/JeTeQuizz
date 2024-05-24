@@ -1,10 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import {
-  TokenResponse,
-  googleLogout,
-  useGoogleLogin,
-} from "@react-oauth/google";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import { store } from "../StoreProvider";
+import { auth } from "../../server/routes/auth";
+import { useStore } from "../hooks/useStore";
 
 type ILoginProps = {
   // TODO
@@ -22,44 +21,91 @@ type IGoogleProfile = {
 };
 
 const Login: FC<ILoginProps> = () => {
-  const [token, setToken] = useState<TokenResponse>();
+  const [tokens, setTokens] = useState<auth>();
   const [profile, setProfile] = useState<IGoogleProfile>();
 
+  const { url } = useContext(store);
+
+  const setUser = useStore((state) => state.setUser);
+
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      setToken(tokenResponse);
+    onSuccess: async ({ code }) => {
+      const res = await fetch(`${url}auth/google?code=${code}`, {
+        method: "POST",
+      });
+      const tokens = await res.json();
+      setTokens(tokens);
+      console.log(tokens);
     },
     onError: (error) => alert(`Login failed: ${error}`),
+    flow: "auth-code",
   });
 
-  useEffect(() => {
-    if (token) {
-      console.log(token);
-      fetch(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.access_token}`,
-            Accept: "application/json",
-          },
+  const fecthUserData = async () => {
+    if (tokens) {
+      const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+        headers: {
+          Authorization: `Bearer ${tokens.access_token}`,
+          Accept: "application/json",
         },
-      )
-        .then((res) => {
-          if (res.status === 200) {
-            return res.json();
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          setProfile(data);
-        })
-        .catch((err) => console.log(err));
+      });
+      const data = await res.json();
+      setProfile(data);
+
+      const user = await fetch(`${url}user?email=${data.email}`);
+      const dbUser = await user.json();
+      if (dbUser.error) {
+        const user = await fetch(`${url}user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.email,
+            name: data.name,
+            token_expiration: tokens.expiry_date,
+          }),
+        });
+        const newUser = await user.json();
+        setUser({
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+          access_token: tokens.access_token,
+          refresh_token: tokens.refresh_token,
+          id_token: tokens.id_token,
+        });
+        return;
+      }
+      console.log(dbUser);
+      setUser({
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token,
+        id_token: tokens.id_token,
+      });
     }
-  }, [token]);
+  };
+
+  useEffect(() => {
+    if (tokens) {
+      fecthUserData();
+    }
+  }, [tokens]);
 
   const logOut = () => {
     googleLogout();
     setProfile(undefined);
+    setUser({
+      id: -1,
+      name: "",
+      email: "",
+      access_token: "",
+      refresh_token: "",
+      id_token: "",
+    });
   };
 
   return (
