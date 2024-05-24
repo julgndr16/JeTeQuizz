@@ -2,13 +2,13 @@ import logoBlack from "../assets/img/logo-black.svg";
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import "../assets/style/Grid.css";
 import Tile from "./Tile";
-import React from "react";
 import { quizz } from "../../server/schemas/schemas";
 import { store } from "../StoreProvider";
-import ScoreData from "./ScoreData";
-import ResultUser from "./ResultUser";
+import { useNavigate } from "react-router-dom";
+
 const Grid: FunctionComponent = () => {
   const { url } = useContext(store);
+  const navigate = useNavigate();
 
   const [quizzes, setQuizzes] = useState<Array<quizz>>([]);
 
@@ -23,7 +23,7 @@ const Grid: FunctionComponent = () => {
 
   return (
     <div className={"content"}>
-      <button className={"new-quizz"}>
+      <button className={"new-quizz"} onClick={() => navigate("/quizCreation")}>
         <p className={"txt"}>New Quizz !</p>
         <img
           className={"logo"}

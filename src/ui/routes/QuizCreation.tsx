@@ -1,47 +1,87 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import Question from "../components/creationQuizz/Question";
 import QuestionForm from "../components/creationQuizz/QuestionForm";
 import Header from "../components/Header";
-import '../assets/style/createQuizz.css';
+import "../assets/style/createQuizz.css";
+import { store } from "../StoreProvider";
+import { useNavigate } from "react-router-dom";
+import {Alert} from "@mui/material";
 
 function QuizCreation() {
-  // state
-  const [questions, setQuestions] = useState([
-    // { id: 1, nom: "Question Title 1" },
-  ]);
+  const navigate = useNavigate();
+  const [questions, setQuestions] = useState([]);
+  const { url } = useContext(store);
+  const [quizName, setQuizName] = useState("");
+  const [quizLevel, setQuizLevel] = useState(1);
 
-  // comportements
-  const handleDelete = (id: number) => {
-    // 1. copie du state
+  const handleDelete = (id) => {
     const questionsCopy = [...questions];
-
-    // 2. manimulation du state
     const questionsCopyUpdated = questionsCopy.filter(
-      (question) => question.id !== id,
+      (question) => question.id !== id
     );
-
-    // 3. modifier mon state avec le setter
     setQuestions(questionsCopyUpdated);
   };
 
   const handleAdd = (questionAAjouter) => {
-    // 1. copie du state
     const questionsCopy = [...questions];
-
-    // 2. manipulation du state
-    questionsCopy.push(questionAAjouter);
-
-    // 3. modifier mon state avec le setter
+    questionsCopy.push({ ...questionAAjouter, reponses: [] });
     setQuestions(questionsCopy);
   };
 
-  // affichage (render)
+  const handleCreate = () => {
+    const formattedQuestions = questions.map((question) => {
+      return {
+        question: question.nom,
+        answers: question.reponses.map((reponse) => reponse.nom),
+        correctAnswer: question.reponses.find(
+          (reponse) => reponse.id === question.bonneReponseID
+        )?.nom,
+      };
+    });
+
+    const quizData = {
+      name: quizName,
+      level: quizLevel,
+      questions: formattedQuestions,
+      creator: 1,
+    };
+
+    fetch(url + "quizz", {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(quizData),
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Quiz created successfully:", data);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error creating quiz:", error);
+        Alert(`Error creating quizz ...`);
+      });
+  };
+
   return (
     <div>
       <Header />
       <div className={"top-page"}>
-        <h2>Name of the quiz</h2>
-        <button className={"create-btn"}>
+        <input
+          type="text"
+          placeholder="quiz name"
+          value={quizName}
+          onChange={(e) => setQuizName(e.target.value)}
+          className={"input-name"}
+        />
+        <input
+          type="number"
+          min="1"
+          placeholder="quiz level"
+          value={quizLevel}
+          className={"input-level"}
+          onChange={(e) => setQuizLevel(parseInt(e.target.value))}
+        />
+        <button className={"create-btn"} onClick={handleCreate}>
           Create
         </button>
       </div>
