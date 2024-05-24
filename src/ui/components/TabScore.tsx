@@ -1,7 +1,7 @@
 import Paper from "@mui/material/Paper";
 import {FC, useContext, useEffect,useState} from "react";
 import { store } from "../StoreProvider";
-
+import "../assets/style/scoreBoard.css";
 
 
 type TabScoreProps = {
@@ -23,7 +23,7 @@ const TabScore : FC<TabScoreProps> = (props)=> {
   }, []);
   return (
     <div>
-      <h1>Table of scores</h1>
+      <h3 className={"title-scoreboard"}>Table of scores</h3>
       <Paper
         style={{
           boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -32,7 +32,7 @@ const TabScore : FC<TabScoreProps> = (props)=> {
           width: "40vw",
           display: "flex",
         }}>
-        <table style={{width:"100%"}}>
+        <table style={{width:"100%"}} className={"table-score"}>
           <thead>
             <tr style={{textAlign:"left", }}>
               <th>Rank</th>

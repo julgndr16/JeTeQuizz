@@ -1,0 +1,16 @@
+.box {
+    font-size: .5em !important;
+}
+
+.box .icon{
+    width: 8px !important;
+}
+
+.title-scoreboard{
+    text-align: center;
+    font-size: 1em;
+}
+
+.table-score {
+
+}

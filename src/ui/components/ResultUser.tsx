@@ -1,5 +1,6 @@
 import Paper from "@mui/material/Paper";
 import ScoreData from "./ScoreData";
+import "../assets/style/scoreBoard.css";
 
 
 type ResultUserProps = {
@@ -16,7 +17,7 @@ const ResultUser: FC<ResultUserProps> = (props) => {
           width: "40vw",
         }}
       >
-        <div style={{display:"flex",flexWrap:"wrap"}}>
+        <div style={{display:"flex",flexWrap:"wrap", fontFamily:"Quicksand"}}>
           <ScoreData  name="Completion" value={props.score*100/props.total+"%"} color="#9B69FF"/>
           <ScoreData name="Total Question" value={props.total} color="#9B69FF"/>
 
