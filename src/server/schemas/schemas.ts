@@ -95,6 +95,7 @@ export const postQuizzResponseSchema = t.Object({
 });
 
 export type postQuizzResponse = Static<typeof postQuizzResponseSchema>;
+export type postQuizzBody = Static<typeof postQuizzBodySchema>;
 
 // Result of a quizz
 
