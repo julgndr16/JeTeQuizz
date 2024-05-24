@@ -5,35 +5,21 @@ import Tile from "./Tile";
 import React from "react";
 import { quizz } from "../../server/schemas/schemas";
 import { store } from "../StoreProvider";
-
+import ScoreData from "./ScoreData";
+import ResultUser from "./ResultUser";
 const Grid: FunctionComponent = () => {
   const { url } = useContext(store);
+
+  const [quizzes, setQuizzes] = useState<Array<quizz>>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       fetch(url + "quizzes")
         .then((res) => res.json())
-        .then((data) => setGrid(data));
+        .then((data) => setQuizzes(data.quizzes));
     };
     fetchData();
   }, []);
-
-  const [quizzes, setValues] = useState([]);
-
-  const setGrid = (data: any[]) => {
-    const values: any[] = [];
-    data.quizzes.forEach((quizz: quizz) => {
-      values.push(
-        <Tile
-          question={quizz.name}
-          nbQuestion={quizz.nbQuestions}
-          level={quizz.level}
-          creator={quizz.creator.name}
-        />,
-      );
-    });
-    setValues(values);
-  };
 
   return (
     <div className={"content"}>
@@ -46,10 +32,19 @@ const Grid: FunctionComponent = () => {
         />
       </button>
       <div className={"grid"}>
-        {quizzes.map((value, index) => (
-          <React.Fragment key={index}>{value}</React.Fragment>
-        ))}
+        {quizzes &&
+          quizzes.map((quizz_, index) => (
+            <Tile
+              key={index}
+              quizzId={quizz_.id}
+              question={quizz_.name}
+              nbQuestion={quizz_.nbQuestions}
+              level={quizz_.level}
+              creator={quizz_.creator.name}
+            />
+          ))}
       </div>
+      <ResultUser/>
     </div>
   );
 };

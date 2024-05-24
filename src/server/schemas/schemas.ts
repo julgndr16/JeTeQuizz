@@ -19,7 +19,7 @@ const userSchema = t.Object({
   name: t.String(),
 });
 
-export const getQuizzesQuerySctestResponsehema = t.Object({
+export const getQuizzesQuerySchema = t.Object({
   level: t.Optional(t.Number()),
   maxQuestions: t.Optional(t.Number()),
   minQuestions: t.Optional(t.Number()),
@@ -71,41 +71,71 @@ export type getQuizzResponse = Static<typeof getQuizzResponseSchema>;
 export type answer = Static<typeof answerSchema>;
 export type question = Static<typeof questionSchema>;
 
+// Create a quizz
+
+export const postQuizzBodySchema = t.Object({
+  name: t.String(),
+  level: t.Number(),
+  questions: t.Array(
+    t.Object({
+      question: t.String(),
+      answers: t.Array(t.String()),
+      correctAnswer: t.String(),
+    }),
+  ),
+  creator: t.Number(),
+});
+
+export const postQuizzResponseSchema = t.Object({
+  idQuizz: t.Number(),
+  name: t.String(),
+  level: t.Number(),
+  nbQuestions: t.Number(),
+  creator: userSchema,
+});
+
+export type postQuizzResponse = Static<typeof postQuizzResponseSchema>;
+
 // Result of a quizz
 
-const postGameQuerySchema = t.Object({
+export const postGameQuerySchema = t.Object({
   idQuizz: t.Number(),
 });
 
-const postGameBodySchema = t.Object({
-  answers: t.Array(t.Number()),
+export const postGameBodySchema = t.Object({
+  answers: t.Array(t.Object({ idQuestion: t.Number(), idAnswer: t.Number() })),
+  idUser: t.Number(),
 });
 
-const postGameResponseSchema = t.Object({
+export const postGameResponseSchema = t.Object({
   idQuizz: t.Number(),
   score: t.Number(),
   date: t.String(),
   idUser: t.Number(),
 });
 
+export type postGameResponse = Static<typeof postGameResponseSchema>;
+
 // User
 
-const getUserQuerySchema = t.Object({
+export const getUserQuerySchema = t.Object({
   id: t.Number(),
 });
 
-const getUserResponseSchema = userSchema;
+export const getUserResponseSchema = userSchema;
 
 // bests scores
 
-const getBestScoresQuerySchema = t.Object({
+export const getBestScoresQuerySchema = t.Object({
   idQuizz: t.Number(),
 });
 
-const getBestScoresResponseSchema = t.Array(
+export const getBestScoresResponseSchema = t.Array(
   t.Object({
     score: t.Number(),
     date: t.String(),
     user: userSchema,
   }),
 );
+
+export type getBestScoresResponse = Static<typeof getBestScoresResponseSchema>;
