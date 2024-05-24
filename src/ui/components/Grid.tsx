@@ -5,7 +5,8 @@ import Tile from "./Tile";
 import React from "react";
 import { quizz } from "../../server/schemas/schemas";
 import { store } from "../StoreProvider";
-
+import ScoreData from "./ScoreData";
+import ResultUser from "./ResultUser";
 const Grid: FunctionComponent = () => {
   const { url } = useContext(store);
 
@@ -43,6 +44,7 @@ const Grid: FunctionComponent = () => {
             />
           ))}
       </div>
+      <ResultUser/>
     </div>
   );
 };

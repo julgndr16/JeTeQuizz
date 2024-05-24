@@ -10,12 +10,11 @@ type ScoreDataProps = {
 const ScoreData: FC<ScoreDataProps>=(props) => {
     return (
       <div>
-        <div>
-          <FiberManualRecordIcon color="success"/>
-          <span>{props.value}</span>
+        <div style={{display: "flex", alignItems:"center"}}>
+            <FiberManualRecordIcon style={{color:"#9B69FF", marginRight: "10px"}}/>
+            <h3 style={{margin: "0"}}>{props.value}%</h3>
         </div>
-        <h3>{props.name}</h3>
-
+            <h3 style={{margin:"0 0 0 0"}}>{props.name}</h3>
       </div>
     );
 }
