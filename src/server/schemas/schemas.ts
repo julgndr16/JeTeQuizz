@@ -19,7 +19,6 @@ const userSchema = t.Object({
   name: t.String(),
 });
 
-
 export const getQuizzesQuerySchema = t.Object({
   level: t.Optional(t.Number()),
   maxQuestions: t.Optional(t.Number()),
@@ -71,6 +70,31 @@ export const getQuizzResponseSchema = t.Object({
 export type getQuizzResponse = Static<typeof getQuizzResponseSchema>;
 export type answer = Static<typeof answerSchema>;
 export type question = Static<typeof questionSchema>;
+
+// Create a quizz
+
+export const postQuizzBodySchema = t.Object({
+  name: t.String(),
+  level: t.Number(),
+  questions: t.Array(
+    t.Object({
+      question: t.String(),
+      answers: t.Array(t.String()),
+      correctAnswer: t.String(),
+    }),
+  ),
+  creator: t.Number(),
+});
+
+export const postQuizzResponseSchema = t.Object({
+  idQuizz: t.Number(),
+  name: t.String(),
+  level: t.Number(),
+  nbQuestions: t.Number(),
+  creator: userSchema,
+});
+
+export type postQuizzResponse = Static<typeof postQuizzResponseSchema>;
 
 // Result of a quizz
 

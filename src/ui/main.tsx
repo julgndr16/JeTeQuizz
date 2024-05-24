@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -12,6 +12,7 @@ import Play from "./routes/Play";
 import Profile from "./routes/Profile";
 import Login from "./routes/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import QuizCreation from "./routes/QuizCreation";
 
 const router = createBrowserRouter([
   {

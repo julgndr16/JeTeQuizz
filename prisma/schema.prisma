@@ -28,6 +28,7 @@ model Question {
   Response_Question_idGoodRepToResponse  Response   @relation("Question_idGoodRepToResponse", fields: [idGoodRep], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idGoodRep")
   Quizz                                  Quizz      @relation(fields: [idQuizz], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_quizzquestt")
   Response_Response_idQuestionToQuestion Response[] @relation("Response_idQuestionToQuestion")
+
   @@index([idGoodRep], map: "fk_idGoodRep")
   @@index([idQuizz], map: "fk_quizzquestt")
 }
