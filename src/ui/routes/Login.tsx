@@ -6,6 +6,7 @@ import { auth } from "../../server/routes/auth";
 import { useStore } from "../hooks/useStore";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
+import Header from "../components/Header";
 
 type ILoginProps = {
   // TODO
@@ -111,7 +112,8 @@ const Login: FC<ILoginProps> = () => {
       display={"flex"}
       flexDirection={"column"}
     >
-      <h2>Login</h2>
+    <Header />
+      <h2 style={{marginTop: "90px"}}>Login</h2>
       {user.id !== -1 ? (
         <div>
           <img src={user.profile_picture} alt="profile" />
