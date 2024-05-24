@@ -41,7 +41,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-localStorage.removeItem("count-store");
+localStorage.removeItem("store");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider

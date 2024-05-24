@@ -3,6 +3,7 @@ import { combine, persist } from "zustand/middleware";
 
 type userT = {
   id: number;
+  profile_picture: string;
   name: string;
   email: string;
   access_token: string;
@@ -23,6 +24,7 @@ export const useStore = create<IStore>()(
           id: -1,
           name: "",
           email: "",
+          profile_picture: "",
           access_token: "",
           refresh_token: "",
           id_token: "",

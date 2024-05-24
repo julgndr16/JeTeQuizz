@@ -1,14 +1,9 @@
-import {useEffect, useState, useContext} from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { useContext, useEffect, useState } from "react";
 import CardQuizz from "../components/CardQuizz";
-import DialogQuizz from "../components/DialogQuizz";
 import { store } from "../StoreProvider";
 import Header from "../components/Header";
-
+import { useStore } from "../hooks/useStore";
+import { useNavigate } from "react-router-dom";
 
 type IQuizz = {
   id: number;
@@ -19,35 +14,45 @@ type IQuizz = {
 };
 
 const Profile = () => {
-  const {url } = useContext(store);
+  const { url } = useContext(store);
   const [open, setOpen] = useState(false);
   const [selectedQuizz, setSelectedQuizz] = useState<IQuizz | null>(null);
   const [quizzes, setQuizzes] = useState([]);
+
+  const user = useStore((state) => state.user);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetch(url + "quizzes?creator=1"  )
+    if (user.id === -1) {
+      navigate("/login");
+    }
+
+    fetch(`${url}quizzes?creator=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("TableQuizz :",data);
+        console.log("TableQuizz :", data);
         setQuizzes(data.quizzes);
       });
   }, []);
 
-
-
-
   return (
     <div style={{}}>
       <Header />
-      <h1 style={{marginTop:"90px"}}>Quizz de John Doe</h1>
-      <div style={{ display: "flex", flexWrap:"wrap",justifyContent: "center", gap: 20 }}>
+      <h1 style={{ marginTop: "90px" }}>Quizz de John Doe</h1>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 20,
+        }}
+      >
         {quizzes.map((quizz) => (
           <div>
-          <CardQuizz quizz={quizz} url={url} />
+            <CardQuizz quizz={quizz} url={url} />
           </div>
         ))}
       </div>
-
-
     </div>
   );
 };
