@@ -21,12 +21,13 @@ model Game {
 }
 
 model Question {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.Text
-  idGoodRep Int
-  idQuizz   Int
-  Response  Response @relation(fields: [idGoodRep], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idGoodRep")
-  Quizz     Quizz    @relation(fields: [idQuizz], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_quizzquestt")
+  id                                     Int        @id @default(autoincrement())
+  name                                   String     @db.Text
+  idGoodRep                              Int
+  idQuizz                                Int
+  Response                               Response   @relation(fields: [idGoodRep], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_idGoodRep")
+  Quizz                                  Quizz      @relation(fields: [idQuizz], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_quizzquestt")
+  Response_Response_idQuestionToQuestion Response[] @relation("Response_idQuestionToQuestion")
 
   @@index([idGoodRep], map: "fk_idGoodRep")
   @@index([idQuizz], map: "fk_quizzquestt")
@@ -46,10 +47,13 @@ model Quizz {
 }
 
 model Response {
-  id         Int        @id @default(autoincrement())
-  name       String     @db.Text
-  idQuestion Int
-  Question   Question[]
+  id                                     Int        @id @default(autoincrement())
+  name                                   String     @db.Text
+  idQuestion                             Int
+  Question                               Question[]
+  Question_Response_idQuestionToQuestion Question   @relation("Response_idQuestionToQuestion", fields: [idQuestion], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_resp")
+
+  @@index([idQuestion], map: "fk_resp")
 }
 
 model User {
