@@ -46,7 +46,9 @@ const DialogQuizz:FC<DialogQuizzProps>=(props)=> {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{quizz.name}</DialogTitle>
+        <DialogTitle className={"popup"} id="alert-dialog-title">
+          <p className={"title-scoreboard"}>{quizz.name}</p>
+        </DialogTitle>
         <DialogContent>
           {questions.map((question) => (
             <div key={question.id}>
@@ -60,7 +62,7 @@ const DialogQuizz:FC<DialogQuizzProps>=(props)=> {
                 {console.log("ListeReponses :",question)}
                 {question.answers.map((response) => (
                   <FormControlLabel
-                    key={response.id}
+                    key={response.answer}
                     value={response.answer}
                     control={<Radio />}
                     label={response.answer}

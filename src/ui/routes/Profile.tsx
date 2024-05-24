@@ -4,6 +4,7 @@ import { store } from "../StoreProvider";
 import Header from "../components/Header";
 import { useStore } from "../hooks/useStore";
 import { useNavigate } from "react-router-dom";
+import "../assets/style/profile.css";
 
 type IQuizz = {
   id: number;
@@ -50,6 +51,7 @@ const Profile = () => {
         {quizzes.map((quizz) => (
           <div>
             <CardQuizz quizz={quizz} url={url} />
+
           </div>
         ))}
       </div>

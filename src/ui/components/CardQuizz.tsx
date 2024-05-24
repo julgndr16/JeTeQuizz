@@ -35,7 +35,7 @@ const CardQuizz :FC<CardQuizzProps>= (props) => {
 
   return (
     <div>
-      <Card key={props.quizz.id} sx={{ minWidth: 275 }}>
+      <div className={"tile"} key={props.quizz.id} sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography variant="h5" component="div">
             {props.quizz.name}
@@ -50,7 +50,7 @@ const CardQuizz :FC<CardQuizzProps>= (props) => {
             Voir les questions
           </Button>
         </CardActions>
-      </Card>
+      </div>
       <DialogQuizz open={open} handleClose={handleClose} quizzId={props.quizz.id} url={props.url} />
     </div>
 
