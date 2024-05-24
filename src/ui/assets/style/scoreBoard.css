@@ -1,5 +1,7 @@
-.box {
-    font-size: .5em !important;
+.box,
+.table-score{
+    font-size: 1.2em !important;
+    padding: 15px 15px;
 }
 
 .box .icon{
@@ -8,9 +10,45 @@
 
 .title-scoreboard{
     text-align: center;
-    font-size: 1em;
+    font-size: 1.2em;
+    background-color: #bdacf3;
+    padding: 5px 15px;
+    border-radius: 5px 5px;
+    width: max-content;
+    margin: 20px auto 10px auto;
+    color: #FFFFFF;
 }
 
-.table-score {
+.table-score tr:nth-child(even){
+    background-color: #ece7fc;
+}
 
+.table-score tr td{
+    text-align: left;
+    border: none;
+    padding: 3px 3px;
+}
+.table-score tr td:first-child {
+    padding-left: 25px;
+
+}
+
+.table-score tr:first-child td:first-child {
+    background-image: url("../img/first.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.table-score tr:nth-child(2) td:first-child {
+    background-position: left;
+    background-image: url("../img/second.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.table-score tr:nth-child(3) td:first-child {
+    background-position: left;
+    background-image: url("../img/third.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
 }

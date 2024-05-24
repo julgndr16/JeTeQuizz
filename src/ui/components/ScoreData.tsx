@@ -16,10 +16,10 @@ const ScoreData: FC<ScoreDataProps>=(props) => {
           </div>
         <div>
           <div>
-            <h3  style={{margin: "0", color: props.color,textAlign: "start"}}>{props.value}</h3>
+            <p  style={{margin: "0", color: props.color,textAlign: "start"}}>{props.value}</p>
           </div>
           <div>
-            <h3  style={{margin: "0 0 0 0"}}>{props.name}</h3>
+            <p style={{margin: "0 0 0 0"}}>{props.name}</p>
           </div>
         </div>
       </div>

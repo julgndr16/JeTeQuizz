@@ -27,9 +27,8 @@ const TabScore : FC<TabScoreProps> = (props)=> {
       <Paper
         style={{
           boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          padding: 15,
           marginBottom: 10,
-          width: "40vw",
+          width: "60vw",
           display: "flex",
         }}>
         <table style={{width:"100%"}} className={"table-score"}>
