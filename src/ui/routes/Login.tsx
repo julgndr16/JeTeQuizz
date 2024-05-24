@@ -11,17 +11,6 @@ type ILoginProps = {
   // TODO
 };
 
-type IGoogleProfile = {
-  id: string;
-  email: string;
-  name: string;
-  picture: string;
-  family_name: string;
-  given_name: string;
-  locale: string;
-  verified_email: boolean;
-};
-
 const Login: FC<ILoginProps> = () => {
   const [tokens, setTokens] = useState<auth>();
 

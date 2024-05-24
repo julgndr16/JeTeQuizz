@@ -1,12 +1,13 @@
-import {useContext, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import Question from "../components/creationQuizz/Question";
 import QuestionForm from "../components/creationQuizz/QuestionForm";
 import Header from "../components/Header";
 import "../assets/style/createQuizz.css";
 import { store } from "../StoreProvider";
 import { useNavigate } from "react-router-dom";
-import {Alert} from "@mui/material";
+import { Alert } from "@mui/material";
 import loader from "../assets/img/loader.svg";
+import { useStore } from "../hooks/useStore";
 
 function QuizCreation() {
   const navigate = useNavigate();
@@ -16,10 +17,15 @@ function QuizCreation() {
   const [quizLevel, setQuizLevel] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
+  const user = useStore((state) => state.user);
+  useEffect(() => {
+    user.id === -1 && navigate("/");
+  }, []);
+
   const handleDelete = (id) => {
     const questionsCopy = [...questions];
     const questionsCopyUpdated = questionsCopy.filter(
-      (question) => question.id !== id
+      (question) => question.id !== id,
     );
     setQuestions(questionsCopyUpdated);
   };
@@ -38,7 +44,7 @@ function QuizCreation() {
         question: question.nom,
         answers: question.reponses.map((reponse) => reponse.nom),
         correctAnswer: question.reponses.find(
-          (reponse) => reponse.id === question.bonneReponseID
+          (reponse) => reponse.id === question.bonneReponseID,
         )?.nom,
       };
     });
@@ -47,25 +53,25 @@ function QuizCreation() {
       name: quizName,
       level: quizLevel,
       questions: formattedQuestions,
-      creator: 1,
+      creator: user.id,
     };
     setTimeout(() => {
-    fetch(url + "quizz", {
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(quizData),
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Quiz created successfully:", data);
-        navigate("/");
-        setIsLoading(false);
+      fetch(url + "quizz", {
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quizData),
+        method: "POST",
       })
-      .catch((error) => {
-        console.error("Error creating quiz:", error);
-        Alert(`Error creating quizz ...`);
-        setIsLoading(false);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Quiz created successfully:", data);
+          navigate("/");
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error creating quiz:", error);
+          Alert(`Error creating quizz ...`);
+          setIsLoading(false);
+        });
     }, 500);
   };
 
@@ -92,7 +98,12 @@ function QuizCreation() {
           required={true}
         />
         {isLoading ? (
-          <img src={loader} alt="Loading..." className={"create-btn"} width={"50px"}/>
+          <img
+            src={loader}
+            alt="Loading..."
+            className={"create-btn"}
+            width={"50px"}
+          />
         ) : (
           <button className={"create-btn"} onClick={handleCreate}>
             Create
@@ -112,6 +123,5 @@ function QuizCreation() {
     </div>
   );
 }
-
 
 export default QuizCreation;

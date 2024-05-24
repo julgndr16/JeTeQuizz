@@ -38,7 +38,7 @@ const Profile = () => {
   return (
     <div style={{}}>
       <Header />
-      <h1 style={{ marginTop: "90px" }}>Quizz de John Doe</h1>
+      <h1 style={{ marginTop: "90px" }}>Quizzes de {user.name}</h1>
       <div
         style={{
           display: "flex",

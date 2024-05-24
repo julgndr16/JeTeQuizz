@@ -5,14 +5,15 @@ import { store } from "../StoreProvider";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ResultUser from "../components/ResultUser";
-import '../assets/style/Play.css';
+import "../assets/style/Play.css";
 import TabScore from "../components/TabScore";
 import loader from "../assets/img/loader.svg";
+import { useStore } from "../hooks/useStore";
 
 const Play = () => {
   const { currentQuizzId, setCurrentQuizzId, url } = useContext(store);
   const [questions, setQuestions] = useState([]);
-  const [ nameQuizz, setNameQuizz] = useState("");
+  const [nameQuizz, setNameQuizz] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [childData, setChildData] = useState();
   const [answers, setAnswers] = useState([]);
@@ -22,8 +23,10 @@ const Play = () => {
 
   const [score, setScore] = useState(undefined);
 
+  const user = useStore((state) => state.user);
+
   useEffect(() => {
-    if (!currentQuizzId) {
+    if (!currentQuizzId || user.id === -1) {
       navigate("/");
     }
   }, [currentQuizzId]);
@@ -31,19 +34,19 @@ const Play = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setTimeout(() =>{
+      setTimeout(() => {
         fetch(url + "quizz?id=" + currentQuizzId)
-        .then((res) => res.json())
-        .then((data) => {
-          setNameQuizz(data.name);
-          setQuestions(data.questions);
-          setLoading(false);
-        });
+          .then((res) => res.json())
+          .then((data) => {
+            setNameQuizz(data.name);
+            setQuestions(data.questions);
+            setLoading(false);
+          });
       }, 500);
     };
     fetchData();
   }, []);
-  
+
   // useEffect(() => {
   //   if(answers.length == questions.length) {
   //     fetch(url + "game?idQuizz=" + currentQuizzId, {
@@ -62,50 +65,66 @@ const Play = () => {
 
   const updateQuestion = () => {
     if (childData) {
-      setAnswers([...answers, {idQuestion: currentQuestion.id ,idAnswer: parseInt(childData)}]);
+      setAnswers([
+        ...answers,
+        { idQuestion: currentQuestion.id, idAnswer: parseInt(childData) },
+      ]);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setChildData(undefined);
     }
-    
   };
 
   const endQuizz = async () => {
     fetch(url + "game?idQuizz=" + currentQuizzId, {
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ answers: [...answers,{idQuestion: currentQuestion.id ,idAnswer: parseInt(childData)}], idUser: 1}),
+      body: JSON.stringify({
+        answers: [
+          ...answers,
+          { idQuestion: currentQuestion.id, idAnswer: parseInt(childData) },
+        ],
+        idUser: user.id,
+      }),
       method: "POST",
-    }).then((res) => res.json()).then((data) => { makeScore(data);});
-
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        makeScore(data);
+      });
 
     // setCurrentQuizzId && setCurrentQuizzId(undefined);
   };
 
-  const makeScore  = async (score_) => {
+  const makeScore = async (score_) => {
     console.log(score_);
     setScore(score_);
   };
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  if(score){
+  if (score) {
     console.log("AFFICHAGE SCORE");
     console.log(score);
     const total = questions.length;
-    return <div id="playbody"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  height: "100%",
-                  margin: 0,
-                  padding: 0,
-                  marginTop: "90px",
-                }}>
-                <Header />
-                <h1>{nameQuizz}</h1>
-      <ResultUser score={score.score} total={total} />
-      <TabScore quizzId={currentQuizzId}/></div>;
+    return (
+      <div
+        id="playbody"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: "100%",
+          margin: 0,
+          padding: 0,
+          marginTop: "90px",
+        }}
+      >
+        <Header />
+        <h1>{nameQuizz}</h1>
+        <ResultUser score={score.score} total={total} />
+        <TabScore quizzId={currentQuizzId} />
+      </div>
+    );
   }
 
   return (
@@ -167,14 +186,11 @@ const Play = () => {
               Finishhhh !
             </Button>
           )}
-          {currentQuestionIndex == questions.length && (
-            <h1>Quizz terminé</h1>
-          )}
+          {currentQuestionIndex == questions.length && <h1>Quizz terminé</h1>}
         </>
       )}
     </div>
   );
-
 };
 
 export default Play;
