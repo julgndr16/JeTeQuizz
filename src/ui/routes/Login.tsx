@@ -6,6 +6,7 @@ import { auth } from "../../server/routes/auth";
 import { useStore } from "../hooks/useStore";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
+import Header from "../components/Header";
 
 type ILoginProps = {
   // TODO
@@ -60,34 +61,33 @@ const Login: FC<ILoginProps> = () => {
         });
         const newUser = await user.json();
         setUser({
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          access_token: tokens.access_token,
-          refresh_token: tokens.refresh_token,
-          id_token: tokens.id_token,
-          profile_picture: data.picture,
+          id: newUser.id ?? -1,
+          name: newUser.name ?? "",
+          email: newUser.email ?? "",
+          access_token: tokens.access_token ?? "",
+          refresh_token: tokens.refresh_token ?? "",
+          id_token: tokens.id_token ?? "",
+          profile_picture: data.picture ?? "",
         });
         return;
       }
       setUser({
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        profile_picture: data.picture,
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        id_token: tokens.id_token,
+        id: dbUser.id ?? -1,
+        name: dbUser.name ?? "",
+        email: dbUser.email ?? "",
+        profile_picture: data.picture ?? "",
+        access_token: tokens.access_token ?? "",
+        refresh_token: tokens.refresh_token ?? "",
+        id_token: tokens.id_token ?? "",
       });
     }
   };
 
   useEffect(() => {
     if (tokens) {
-      fecthUserData();
-      setTimeout(() => {
+      fecthUserData().then(() => setTimeout(() => {
         navigate("/profile");
-      }, 200);
+      }, 200));
     }
   }, [tokens]);
 
@@ -112,7 +112,8 @@ const Login: FC<ILoginProps> = () => {
       display={"flex"}
       flexDirection={"column"}
     >
-      <h2>Login</h2>
+    <Header />
+      <h2 style={{marginTop: "90px"}}>Login</h2>
       {user.id !== -1 ? (
         <div>
           <img src={user.profile_picture} alt="profile" />
