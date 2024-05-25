@@ -5,14 +5,29 @@ import "../assets/style/Header.css";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../hooks/useStore";
 import Button from "@mui/material/Button";
+import { googleLogout } from "@react-oauth/google";
 
 const Header: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const user = useStore((state) => state.user);
+  const setUser = useStore((state) => state.setUser);
 
   const handleAccountNav = () => {
     user.id !== -1 ? navigate("/profile") : navigate("/login");
+  };
+
+  const logOut = () => {
+    googleLogout();
+    setUser({
+      id: -1,
+      name: "",
+      email: "",
+      profile_picture: "",
+      access_token: "",
+      refresh_token: "",
+      id_token: "",
+    });
   };
 
   return (
@@ -34,7 +49,11 @@ const Header: FunctionComponent = () => {
             onClick={() => handleAccountNav()}
           ></button>
           {user.id !== -1 && (
-            <Button variant={"outlined"} color={"primary"}>
+            <Button
+              onClick={() => logOut()}
+              variant={"outlined"}
+              color={"primary"}
+            >
               logout
             </Button>
           )}

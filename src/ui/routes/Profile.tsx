@@ -24,10 +24,6 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.id === -1) {
-      navigate("/login");
-    }
-
     fetch(`${url}quizzes?creator=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -35,6 +31,12 @@ const Profile = () => {
         setQuizzes(data.quizzes);
       });
   }, []);
+
+  useEffect(() => {
+    if (user.id === -1) {
+      navigate("/login");
+    }
+  }, [user]);
 
   return (
     <div style={{}}>
